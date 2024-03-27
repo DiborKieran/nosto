@@ -1,0 +1,242 @@
+<style type="text/css">
+    #$divId .grid-item.grid-product {
+        flex: 0 0 25%;
+    }
+    
+    #$divId .grid-product__title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+    }
+    
+    #$divId .nosto_tip {
+        display: none;
+    }
+    
+    @media only screen and (max-width: 768px) {
+        #$divId .scrollable-grid--small .grid-item {
+            flex: 0 0 45%!important;
+        }
+        
+        #$divId .grid-product__title {
+            -webkit-line-clamp: 3;
+        }
+    }
+</style>
+
+<div class="index-section index-section--sub-product">
+
+   #if($title)
+   <div class="page-width">
+      <header class="section-header">
+         <div class="h3 section-header__title">
+            $title
+         </div>
+      </header>
+   </div>
+   #end
+   
+   <div class="page-width page-width--flush-small">
+      <div class="product-recommendations-placeholder">
+         <div class="new-grid product-grid scrollable-grid--small">
+            #foreach($product in $!products)
+            <div class="grid-item grid-product " data-product-handle="winter-wishes-star-christmas-light" data-product-id="$!product.productId">
+               <div class="grid-item__content">
+                  <div class="grid-product__actions">
+                    <!-- <button class="btn btn--circle btn--icon quick-product__btn js-modal-open-quick-modal-${product.productId} small--hide" title="Quick shop" data-handle="$!product.lastPathOfProductUrl()" aria-expanded="false">
+                        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-search" viewBox="0 0 64 64">
+                           <path d="M47.16 28.58A18.58 18.58 0 1 1 28.58 10a18.58 18.58 0 0 1 18.58 18.58ZM54 54 41.94 42" style="stroke-miterlimit:10"></path>
+                        </svg>
+                        <span class="icon__fallback-text">Quick shop</span>
+                     </button> -->
+                     <button type="button" class="text-link quick-add-btn js-quick-add-btn nosto-atc" title="Add to basket" data-id="$!product.skus[0].id" prodId="$!product.productId">
+                        <span class="btn btn--circle btn--icon">
+                           <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-plus" viewBox="0 0 64 64">
+                              <path class="cls-1" d="M32 9v46m23-23H9"></path>
+                           </svg>
+                           <span class="icon__fallback-text">Add to basket</span>
+                        </span>
+                     </button>
+                  </div>
+                  <a href="$!product.url" class="grid-item__link">
+                     <div class="grid-product__image-wrap">
+                        <div class="grid-product__tags">
+                            #if($product.discounted)
+                                <div class="grid-product__tag grid-product__tag--sale">Special Offer</div>
+                            #end
+                        </div>
+                        <div class="grid__image-ratio grid__image-ratio--portrait">
+                           <image-element data-aos="image-fade-in" data-aos-offset="150" class="aos-init aos-animate">
+                              <img src="$!product.thumb(8)" alt="" srcset="${product.imageUrl}&amp;width=160 160w, 
+                                 ${product.imageUrl}&amp;width=200 200w, 
+                                 ${product.imageUrl}&amp;width=280 280w, 
+                                 ${product.imageUrl}&amp;width=360 360w, 
+                                 ${product.imageUrl}&amp;width=540 540w, 
+                                 ${product.imageUrl}&amp;width=720 720w, 
+                                 ${product.imageUrl}&amp;width=900 900w" loading="lazy" class=" image-style--
+                                 image-element" sizes="(min-width: 769px) 25vw, 45vw">
+                           </image-element>
+                        </div>
+                        <div class="grid-product__secondary-image small--hide">
+                           #set($altImg = "")
+                            #if($!product.alternateImageUrls != '[]')
+                                #set($altImg = $product.alternateImageUrls[0])
+                            #else
+                                #set($altImg = $product.thumb(8))
+                           #end
+                           <image-element data-aos="image-fade-in" data-aos-offset="150" class="aos-init aos-animate">
+                              <img src="${altImg}&amp;width=1000" alt="" srcset="${altImg}&amp;width=360 360w, 
+                                 ${altImg}&amp;width=540 540w, 
+                                 ${altImg}&amp;width=720 720w, 
+                                 ${altImg}&amp;width=1000 1000w" loading="lazy" class="image-style--
+                                 image-element" sizes="(min-width: 769px) 25vw, 45vw">
+                           </image-element>
+                        </div>
+                     </div>
+                     <div class="grid-item__meta">
+                        <div class="grid-item__meta-main">
+                        #set($skuOptionsColour = $!product.getSkuOptions("Colour"))
+                        #set($skuOptionsColor = $!product.getSkuOptions("Color"))
+                        
+                        #if(!$skuOptionsColour.isEmpty())
+                            #set($skuOptions = $skuOptionsColour)
+                        #elseif(!$skuOptionsColor.isEmpty())
+                            #set($skuOptions = $skuOptionsColor)
+                        #else
+                            #set($skuOptions = [])
+                        #end
+
+                        
+                        #if(!$skuOptions.isEmpty())
+                            #set($skuSize = $skuOptions.size())
+                            <div class="grid-product__colors">
+                                #foreach($sku in $skuOptions)
+                                #set($color = "")
+                                
+                                    #if($sku.getOptionValue().toString() == "Sage Green")
+                                        #set($color = "green")
+                                    #elseif($sku.getOptionValue().toString().contains(" ") && $sku.getOptionValue().toString() != "Sage Green")
+                                        #set($color = $sku.getOptionValue().toString().toLowerCase().replaceAll(" ", ""))
+                                    #else
+                                        #set($color = $sku.getOptionValue().toLowerCase())
+                                    #end
+                                
+                                #set($colorId = $sku.getFirstSku().getId())
+                                #set($colorImg = $sku.getFirstSku().getImageUrl())
+                                
+                                <span class="color-swatch color-swatch--small color-swatch--${color} color-swatch--with-image" data-url="/collections/bestsellers/products/${product.lastPathOfProductUrl()}?variant=${colorId}" 
+                                    data-variant-id="$colorId" data-variant-image="$colorImg" style="background-color: ${color};" alt-image="${altImg}">
+                                    <span class="visually-hidden">$color</span>
+                                    </span>
+                                    
+                                    #if($velocityCount >= 6)
+                                        #set($rest = $skuSize - 6)
+                                        <small class="color-swatch__more">+$rest</small>
+                                        #break
+                                    #end
+                                
+                                #end
+                            </div>
+                        #end    
+                           <div class="grid-product__title">$!product.name</div>
+                        </div>
+                        <div class="grid-item__meta-secondary">
+                        
+                        #set($cheapestPrice = "")
+                    
+                    	#foreach($sku in $product.skus)
+                    	    #if($sku.available && ($sku.price < $cheapestPrice || $cheapestPrice == ""))
+                    	        #set($cheapestPrice = $sku.price)
+                    	        #set($cheapestListPrice = $sku.listPrice)
+                    	    #end
+                    	#end
+                        
+                           <div class="grid-product__price">
+                            #if($product.discounted)
+                                <span class="visually-hidden">Special Offer Price</span>
+                                    <span class="grid-product__price--current">
+                                    <span aria-hidden="true">#if($product.skus.size() > 1) from $cheapestPrice #else $product.price #end</span>
+                                    <span class="visually-hidden">#if($product.skus.size() > 1) $cheapestPrice #else $product.price #end</span>
+                                    
+                                    </span><span class="visually-hidden">Regular price</span>
+                                    <span class="grid-product__price--original"><span aria-hidden="true">#if($product.skus.size() > 1) $cheapestListPrice #else $product.listPrice #end</span>
+                                    <span class="visually-hidden">#if($product.skus.size() > 1) $cheapestListPrice #else $product.listPrice #end</span>
+                                    </span>
+                                    <span class="grid-product__price--savings">Save $!{product.discount.percent}%</span>
+                            #else
+                                <span class="grid-product__price--current">#if($product.skus.size() > 1) from $cheapestPrice #else $product.price #end</span>
+                                <span class="visually-hidden">#if($product.skus.size() > 1) $cheapestPrice #else $product.price #end</span>
+                            <!--  </span> -->
+                            #end  
+                           </div>
+                        </div>
+                     </div>
+                  </a>
+               </div>
+            </div>
+            #end
+         </div>
+      </div>
+   </div>
+</div>
+
+<script type="text/javascript">
+
+const swatches = _targetWindow.document.querySelectorAll("#$divId .color-swatch");
+let lastActiveSwatch = null; 
+swatches.forEach(swatch => {
+    swatch.addEventListener("mouseover", function() {
+        if (lastActiveSwatch && lastActiveSwatch !== swatch) {
+            lastActiveSwatch.classList.remove("is-active");
+            
+            const altImg = lastActiveSwatch.getAttribute("alt-image");
+            
+            const prevParentDiv = lastActiveSwatch.parentElement.parentElement.parentElement.parentElement;
+            const prevSecondaryImg = prevParentDiv.querySelector(".grid-product__secondary-image image-element > img");
+
+            prevSecondaryImg.setAttribute("src", altImg);
+            prevSecondaryImg.setAttribute("srcset", altImg);
+        }
+        
+        swatch.classList.add("is-active");
+        let swatchImg = swatch.getAttribute("data-variant-image");
+
+        const parentDiv = swatch.parentElement.parentElement.parentElement.parentElement;
+        const secondaryImg = parentDiv.querySelector(".grid-product__secondary-image image-element > img");
+        const variantId = swatch.getAttribute("data-variant-id")
+        
+        secondaryImg.setAttribute("src", swatchImg);
+        secondaryImg.setAttribute("srcset", swatchImg);
+        
+        const mainParent = swatch.parentElement.parentElement.parentElement.parentElement.parentElement;
+        const btn = mainParent.querySelector(".nosto-atc");
+        btn.setAttribute("data-id", variantId)
+
+        lastActiveSwatch = swatch;
+    })
+});
+
+
+const atcButtons = _targetWindow.document.querySelectorAll("#$divId .nosto-atc"); 
+atcButtons.forEach(atc => {
+    atc.addEventListener("click", function() {
+        let productId = atc.getAttribute("prodId")
+        let skuId = atc.getAttribute("data-id"); 
+        
+        _targetWindow.Nosto.addSkuToCart({ productId, skuId }, '$!products[0].attributionKey')
+            .then(() => {
+                atc.querySelector(".btn--icon").classList.add("btn--loading");
+                
+                _targetWindow.document.dispatchEvent(new CustomEvent('ajaxProduct:added', {
+                  bubbles: true
+                }))
+            })
+            .then(() => {
+                setTimeout(() => atc.querySelector(".btn--icon").classList.remove("btn--loading"), 500)
+            })
+    })
+})
+
+</script>
