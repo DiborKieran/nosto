@@ -142,6 +142,7 @@
                         #end    
                            <div class="grid-product__title">$!product.name</div>
                         </div>
+                        <div class="yotpo bottomLine yotpo-small" data-product-id=$!product.productId data-yotpo-element-id="3"> <div class="yotpo-display-wrapper" style="visibility: hidden;">  <div class="standalone-bottomline" data-source="default" tabindex="-1"> <div class="yotpo-bottomline pull-left  star-clickable" tabindex="0">  <span class="yotpo-stars"> <span class="yotpo-icon yotpo-icon-star rating-star pull-left"></span><span class="yotpo-icon yotpo-icon-star rating-star pull-left"></span><span class="yotpo-icon yotpo-icon-star rating-star pull-left"></span><span class="yotpo-icon yotpo-icon-star rating-star pull-left"></span><span class="yotpo-icon yotpo-icon-half-star rating-star pull-left"></span><span class="sr-only">4.7 star rating</span> </span>  <a href="javascript:void(0)" class="text-m" aria-label="19 reviews" tabindex="-1">19 Reviews</a>   <div class="yotpo-clr"></div> </div> <div class="yotpo-clr"></div> </div>   <div class="yotpo-clr"></div> </div></div>
                         <div class="grid-item__meta-secondary">
                         
                         #set($cheapestPrice = "")
@@ -238,5 +239,5 @@ atcButtons.forEach(atc => {
             })
     })
 })
-
+<script type="text/javascript" src="//staticw2.yotpo.com/nD5ZwlWs1qn1Zl8N8SeH992AM1NouWQ8UZ4BKOdc/widget.js" async></script>
 </script>
